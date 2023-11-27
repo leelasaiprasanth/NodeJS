@@ -1,0 +1,154 @@
+<!-- @format -->
+
+# NODEJS API's
+
+## HTTP response status codes
+
+> HTTP response status codes indicate whether a specific HTTP request has been successfully completed. Responses are grouped in five classes:
+
+- Informational responses (100 – 199)
+- Successful responses (200 – 299)
+- Redirection messages (300 – 399)
+- Client error responses (400 – 499)
+- Server error responses (500 – 599)
+
+### Information responses
+
+#### 100 Continue
+
+This interim response indicates that the client should continue the request or ignore the response if the request is already finished.
+
+#### 101 Switching Protocols
+
+This code is sent in response to an Upgrade request header from the client and indicates the protocol the server is switching to.
+
+#### 102 Processing (WebDAV)
+
+This code indicates that the server has received and is processing the request, but no response is available yet.
+
+#### 103 Early Hints
+
+This status code is primarily intended to be used with the Link header, letting the user agent start preloading resources while the server prepares a response or preconnect to an origin from which the page will need resources.
+
+### Successful responses
+
+#### 200 OK
+
+The request succeeded. The result meaning of "success" depends on the HTTP method:
+
+GET: The resource has been fetched and transmitted in the message body.
+HEAD: The representation headers are included in the response without any message body.
+PUT or POST: The resource describing the result of the action is transmitted in the message body.
+TRACE: The message body contains the request message as received by the server.
+
+#### 201 Created
+
+The request succeeded, and a new resource was created as a result. This is typically the response sent after POST requests, or some PUT requests.
+
+#### 202 Accepted
+
+The request has been received but not yet acted upon. It is noncommittal, since there is no way in HTTP to later send an asynchronous response indicating the outcome of the request. It is intended for cases where another process or server handles the request, or for batch processing.
+
+#### 203 Non-Authoritative Information
+
+This response code means the returned metadata is not exactly the same as is available from the origin server, but is collected from a local or a third-party copy. This is mostly used for mirrors or backups of another resource. Except for that specific case, the 200 OK response is preferred to this status.
+
+#### 204 No Content
+
+There is no content to send for this request, but the headers may be useful. The user agent may update its cached headers for this resource with the new ones.
+
+#### 205 Reset Content
+
+Tells the user agent to reset the document which sent this request.
+
+#### 206 Partial Content
+
+This response code is used when the Range header is sent from the client to request only part of a resource.
+
+#### 207 Multi-Status (WebDAV)
+
+Conveys information about multiple resources, for situations where multiple status codes might be appropriate.
+
+#### 208 Already Reported (WebDAV)
+
+Used inside a <dav:propstat> response element to avoid repeatedly enumerating the internal members of multiple bindings to the same collection.
+
+#### 226 IM Used (HTTP Delta encoding)
+
+The server has fulfilled a GET request for the resource, and the response is a representation of the result of one or more instance-manipulations applied to the current instance.
+
+### Redirection messages
+
+#### 300 Multiple Choices
+
+The request has more than one possible response. The user agent or user should choose one of them. (There is no standardized way of choosing one of the responses, but HTML links to the possibilities are recommended so the user can pick.)
+
+#### 301 Moved Permanently
+
+The URL of the requested resource has been changed permanently. The new URL is given in the response.
+
+#### 302 Found
+
+This response code means that the URI of requested resource has been changed temporarily. Further changes in the URI might be made in the future. Therefore, this same URI should be used by the client in future requests.
+
+#### 303 See Other
+
+The server sent this response to direct the client to get the requested resource at another URI with a GET request.
+
+#### 304 Not Modified
+
+This is used for caching purposes. It tells the client that the response has not been modified, so the client can continue to use the same cached version of the response.
+
+#### 305 Use Proxy Deprecated
+
+Defined in a previous version of the HTTP specification to indicate that a requested response must be accessed by a proxy. It has been deprecated due to security concerns regarding in-band configuration of a proxy.
+
+#### 306 unused
+
+This response code is no longer used; it is just reserved. It was used in a previous version of the HTTP/1.1 specification.
+
+#### 307 Temporary Redirect
+
+The server sends this response to direct the client to get the requested resource at another URI with the same method that was used in the prior request. This has the same semantics as the 302 Found HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.
+
+#### 308 Permanent Redirect
+
+This means that the resource is now permanently located at another URI, specified by the Location: HTTP Response header. This has the same semantics as the 301 Moved Permanently HTTP response code, with the exception that the user agent must not change the HTTP method used: if a POST was used in the first request, a POST must be used in the second request.
+
+### Client error responses
+
+#### 400 Bad Request
+
+The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+
+#### 401 Unauthorized
+
+Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated". That is, the client must authenticate itself to get the requested response.
+
+#### 402 Payment Required Experimental
+
+This response code is reserved for future use. The initial aim for creating this code was using it for digital payment systems, however this status code is used very rarely and no standard convention exists.
+
+#### 403 Forbidden
+
+The client does not have access rights to the content; that is, it is unauthorized, so the server is refusing to give the requested resource. Unlike 401 Unauthorized, the client's identity is known to the server.
+
+#### 404 Not Found
+
+The server cannot find the requested resource. In the browser, this means the URL is not recognized. In an API, this can also mean that the endpoint is valid but the resource itself does not exist. Servers may also send this response instead of 403 Forbidden to hide the existence of a resource from an unauthorized client. This response code is probably the most well known due to its frequent occurrence on the web.
+
+#### 405 Method Not Allowed
+
+The request method is known by the server but is not supported by the target resource. For example, an API may not allow calling DELETE to remove a resource.
+
+#### 406 Not Acceptable
+
+This response is sent when the web server, after performing server-driven content negotiation, doesn't find any content that conforms to the criteria given by the user agent.
+
+#### 407 Proxy Authentication Required
+
+This is similar to 401 Unauthorized but authentication is needed to be done by a proxy.
+
+#### 408 Request Timeout
+
+This response is sent on an idle connection by some servers, even without any previous request by the client. It means that the server would like to shut down this unused connection. This response is used much more since some browsers, like Chrome, Firefox 27+, or IE9, use HTTP pre-connection mechanisms to speed up surfing. Also note that some servers merely shut down the connection without sending this message.
